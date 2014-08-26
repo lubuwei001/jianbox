@@ -1,32 +1,58 @@
 ---
-layout: default
-title: 茧报
-keywords: Jekyll
+layout: blog
 ---
+
 {% for post in paginator.posts %}
-    <div class="article">
-        <h3 class="title"><a href="{{ site.url }}{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
-        <article class="rexp">
-            <p>{{ post.excerpt }}</p>
-        </article>
-        <a href="{{ site.url }}{{ post.url }}" class="more"><i class="icon-link"></i></a>
-        <div class="info">
-            <span class="info-title"><i class="icon-calendar"></i> Published: </span>
-            <span class="info-date">{{ post.date | date_to_string }}</span>
+<div class="posts">
+
+    <section class="post">
+        <header class="post-header">
+            <img class="post-avatar" height="48" width="48"
+                 src="{{ post.avatarimg }}">
+
+            <h2 class="post-title">{{ post.title }}</h2>
+
+            <p class="post-meta">By {{ post.date | date: "%m" }}月{{ post.date | date: "%d" }}日  {{ post.date | date: "%Y" }}  <a
+                    class="post-categorybut " href="/type/#{{ post.categories  }}">{{ post.categories  }}</a><a
+                    class="post-category " > {{ post.tags | first }}</a><a
+                    class="post-category ">  {{ post.tags[1] }}</a>
+
+
+
+            </p>
+        </header>
+
+        <div class="post-description">
+            {{ post.content | split:'<!-- more -->'| first }}
+
+
+            <a href="{{ post.url }}" class="post-categorybut">阅读全文</a>
         </div>
-    </div>
+    </section>
+</div>
 {% endfor %}
-{% if paginator.total_pages > 1 %}
-    <nav class="pagination fn-clear">
-        <span class="pagination-icon"><i class=" icon-copy"></i></span>
-        <ul class="pagination-list">
-            {% for page in (1..paginator.total_pages) %}
-                {% if page == paginator.page %}
-                    <li class="current"><a href="javascript:void(0);">{{ page }}</a></li>
-                {% else %}
-                    <li><a href="{{ site.url }}/{%if page > 1 %}page{{ page }}/{% endif %}">{{ page }}</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-    </nav>
-{% endif %}
+<div class="pagination">
+
+    {% if paginator.previous_page %}
+    {% if paginator.page == 2 %}
+    <a class="pagination-item newer" href="/">Newer</a>
+    {% else %}
+    <a class="pagination-item newer" href="/page/{{paginator.previous_page}}">Newer</a>
+    {% endif %}
+    {% else %}
+    <span class="pagination-item newer">Newer</span>
+    {% endif %}
+
+    {% if paginator.next_page %}
+    <a class="pagination-item older" href="/page/{{paginator.next_page}}">Older</a>
+    {% else %}
+    <span class="pagination-item older">Older</span>
+    {% endif %}
+</div>
+
+
+
+
+
+
+
