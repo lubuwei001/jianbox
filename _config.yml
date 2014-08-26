@@ -1,5 +1,5 @@
 markdown: rdiscount
-pygments: true
+highter: true
 plugins: ./_plugins
 paginate: 8
 
